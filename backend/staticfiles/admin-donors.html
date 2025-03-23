@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Donors Management - Unite to Uplift</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Admin Panel Specific Styles */
+        .admin-dashboard {
+            padding: 30px 0;
+        }
+        
+        .admin-card {
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-sidebar {
+            background: #2D3E50;
+            color: white;
+            padding: 20px 0;
+            min-height: calc(100vh - 100px);
+            border-radius: 8px;
+        }
+        
+        .admin-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .admin-sidebar li {
+            padding: 10px 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-sidebar li:hover, .admin-sidebar li.active {
+            background: rgba(255,255,255,0.1);
+            border-left: 3px solid #F85A16;
+        }
+        
+        .admin-sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .admin-sidebar .icon {
+            margin-right: 10px;
+        }
+        
+        .table-actions a {
+            margin: 0 5px;
+        }
+        
+        .admin-panel-logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .admin-header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .admin-dropdown .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+        
+        .modal-header {
+            background: #F85A16;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 id="fh5co-logo"><a href="index.html">UNITE TO UPLIFT</a></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="dropdown admin-dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="adminDropdown" data-toggle="dropdown">
+                            <i class="icon-user"></i> Admin Name
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" id="changePasswordLink">Change Password</a>
+                            <a class="dropdown-item" href="admin-login.html" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container admin-dashboard">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="admin-sidebar">
+                    <div class="admin-panel-logo">Admin Panel</div>
+                    <ul>
+                        <li><a href="admin-dashboard.html"><i class="icon icon-home3"></i> Dashboard</a></li>
+                        <li class="active"><a href="admin-donors.html"><i class="icon icon-users"></i> Donors</a></li>
+                        <li><a href="admin-organizations.html"><i class="icon icon-office"></i> Organizations</a></li>
+                        
+                        <li><a href="index.html"><i class="icon icon-exit"></i> Back to Website</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Donors</h3>
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control" placeholder="Search donors...">
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Registration Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Arathy S</td>
+                                <td>arathy@123.com</td>
+                                <td>555-123-4567</td>
+                                <td>2025-01-15</td>
+                                <td class="table-actions">
+                                    <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#viewDonorModal"><i class="icon-eye"></i></a>
+                                    <a href="#" class="btn btn-sm btn-danger delete-donor-btn"><i class="icon-bin"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Akash Gupta</td>
+                                <td>gakash@11.com</td>
+                                <td>555-987-6543</td>
+                                <td>2025-01-20</td>
+                                <td class="table-actions">
+                                    <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#viewDonorModal"><i class="icon-eye"></i></a>
+                                    <a href="#" class="btn btn-sm btn-danger delete-donor-btn"><i class="icon-bin"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>R Johnson</td>
+                                <td>robertj00@.com</td>
+                                <td>555-555-5555</td>
+                                <td>2025-02-05</td>
+                                <td class="table-actions">
+                                    <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#viewDonorModal"><i class="icon-eye"></i></a>
+                                    <a href="#" class="btn btn-sm btn-danger delete-donor-btn"><i class="icon-bin"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sarah Williams</td>
+                                <td>sarah@example.com</td>
+                                <td>555-222-3333</td>
+                                <td>2025-02-12</td>
+                                <td class="table-actions">
+                                    <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#viewDonorModal"><i class="icon-eye"></i></a>
+                                    <a href="#" class="btn btn-sm btn-danger delete-donor-btn"><i class="icon-bin"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Michael B</td>
+                                <td>michael@a12.com</td>
+                                <td>555-444-5555</td>
+                                <td>2025-02-18</td>
+                                <td class="table-actions">
+                                    <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#viewDonorModal"><i class="icon-eye"></i></a>
+                                    <a href="#" class="btn btn-sm btn-danger delete-donor-btn"><i class="icon-bin"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Donor Modal -->
+    <div class="modal fade" id="viewDonorModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Donor Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><strong>Full Name:</strong></label>
+                                <p>John Doe</p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Email:</strong></label>
+                                <p>john@example.com</p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Phone:</strong></label>
+                                <p>555-123-4567</p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Address:</strong></label>
+                                <p>123 Main St, Anytown, USA 12345</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><strong>Registration Date:</strong></label>
+                                <p>2025-01-15</p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Total Donations:</strong></label>
+                                <p>$750</p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Last Donation:</strong></label>
+                                <p>2025-03-01 ($100)</p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Preferred Causes:</strong></label>
+                                <p>Children, Education, Hunger</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5>Donation History</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Organization</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2025-03-01</td>
+                                <td>Feed the Children</td>
+                                <td>$100</td>
+                                <td>Approved</td>
+                            </tr>
+                            <tr>
+                                <td>2025-02-15</td>
+                                <td>Global Relief</td>
+                                <td>$250</td>
+                                <td>Approved</td>
+                            </tr>
+                            <tr>
+                                <td>2025-01-30</td>
+                                <td>Animal Rescue</td>
+                                <td>$400</td>
+                                <td>Approved</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Modal -->
+    <div class="modal fade" id="

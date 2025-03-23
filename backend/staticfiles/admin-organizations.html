@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Organization Dashboard - Unite to Uplift</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Admin Panel Specific Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .admin-dashboard {
+            padding: 30px 0;
+        }
+        
+        .admin-card {
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .admin-sidebar {
+            background: #2D3E50;
+            color: white;
+            padding: 20px 0;
+            min-height: calc(100vh - 100px);
+            border-radius: 8px;
+        }
+        
+        .admin-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .admin-sidebar li {
+            padding: 10px 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-sidebar li:hover, .admin-sidebar li.active {
+            background: rgba(255,255,255,0.1);
+            border-left: 3px solid #F85A16;
+        }
+        
+        .admin-sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .admin-sidebar .icon {
+            margin-right: 10px;
+        }
+        
+        .admin-panel-logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .admin-header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .admin-dropdown .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stats-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #F85A16;
+        }
+        
+        .stats-card .label {
+            text-transform: uppercase;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-pending {
+            background: #FFF3CD;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background: #D4EDDA;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+        
+        /* Organization specific styles */
+        .badge-success {
+            background-color: #D4EDDA;
+            color: #155724;
+        }
+        
+        .badge-warning {
+            background-color: #FFF3CD;
+            color: #856404;
+        }
+        
+        .badge-danger {
+            background-color: #F8D7DA;
+            color: #721C24;
+        }
+        
+        .btn-primary {
+            background-color: #F85A16;
+            border-color: #F85A16;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e04b11;
+            border-color: #e04b11;
+        }
+
+        .btn-approve {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            color: white;
+        }
+
+        .btn-reject {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+
+        .btn-reject:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            color: white;
+        }
+
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .org-details dt {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .org-details dd {
+            margin-bottom: 1rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 id="fh5co-logo"><a href="index.html">UNITE TO UPLIFT</a></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="dropdown admin-dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="adminDropdown" data-toggle="dropdown">
+                            <i class="icon-user"></i> Admin Name
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" id="changePasswordLink">Change Password</a>
+                            <a class="dropdown-item" href="admin-login.html" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container admin-dashboard">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="admin-sidebar">
+                    <div class="admin-panel-logo">Admin Panel</div>
+                    <ul>
+                        <li><a href="admin-dashboard.html"><i class="icon icon-home3"></i> Dashboard</a></li>
+                        <li><a href="admin-donors.html"><i class="icon icon-users"></i> Donors</a></li>
+                        <li class="active"><a href="admin-organizations.html"><i class="icon icon-office"></i> Organizations</a></li>
+                        <li><a href="index.html"><i class="icon icon-exit"></i> Back to Website</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <h3>Organizations</h3>
+                
+                <!-- Stats Cards -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="admin-card stats-card">
+                            <i class="icon icon-office" style="font-size: 32px; color: #F85A16;"></i>
+                            <div class="number" id="totalOrgs">0</div>
+                            <div class="label">Total Organizations</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="admin-card stats-card">
+                            <i class="fas fa-clock" style="font-size: 32px; color: #ffc107;"></i>
+                            <div class="number" id="pendingOrgs">0</div>
+                            <div class="label">Pending Approvals</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="admin-card stats-card">
+                            <i class="fas fa-check-circle" style="font-size: 32px; color: #28a745;"></i>
+                            <div class="number" id="activeOrgs">0</div>
+                            <div class="label">Active Organizations</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Organizations List -->
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="admin-card">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4>Organizations</h4>
+                                <div>
+                                    <select class="form-control form-control-sm d-inline-block mr-2" style="width: 150px;" id="statusFilter">
+                                        <option value="all">All Status</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="approved">Approved</option>
+                                        <option value="rejected">Rejected</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Type</th>
+                                            <th>Location</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="organizationsTable">
+                                        <!-- Organizations will be loaded dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organization Details Modal -->
+    <div class="modal fade" id="organizationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Organization Details</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <dl class="row org-details">
+                        <dt class="col-sm-3">Organization Name</dt>
+                        <dd class="col-sm-9" id="modalOrgName"></dd>
+
+                        <dt class="col-sm-3">Email</dt>
+                        <dd class="col-sm-9" id="modalOrgEmail"></dd>
+
+                        <dt class="col-sm-3">Phone</dt>
+                        <dd class="col-sm-9" id="modalOrgPhone"></dd>
+
+                        <dt class="col-sm-3">Type</dt>
+                        <dd class="col-sm-9" id="modalOrgType"></dd>
+
+                        <dt class="col-sm-3">Location</dt>
+                        <dd class="col-sm-9" id="modalOrgLocation"></dd>
+
+                        <dt class="col-sm-3">License Number</dt>
+                        <dd class="col-sm-9" id="modalOrgLicense"></dd>
+
+                        <dt class="col-sm-3">Description</dt>
+                        <dd class="col-sm-9" id="modalOrgDescription"></dd>
+
+                        <dt class="col-sm-3">Registration Date</dt>
+                        <dd class="col-sm-9" id="modalOrgRegDate"></dd>
+
+                        <dt class="col-sm-3">Status</dt>
+                        <dd class="col-sm-9" id="modalOrgStatus"></dd>
+
+                        <dt class="col-sm-3">Registration Certificate</dt>
+                        <dd class="col-sm-9">
+                            <a href="#" id="modalOrgCertificate" target="_blank" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-file-pdf"></i> View Certificate
+                            </a>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="modal-footer" id="modalActions">
+                    <!-- Action buttons will be added dynamically based on organization status -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Load organizations on page load
+            loadOrganizations();
+
+            // Filter organizations based on status
+            $('#statusFilter').change(function() {
+                loadOrganizations($(this).val());
+            });
+
+            function loadOrganizations(status = 'all') {
+                $.ajax({
+                    url: '/api/admin/organizations/',
+                    method: 'GET',
+                    data: { status: status },
+                    success: function(response) {
+                        updateStats(response.stats);
+                        populateOrganizationsTable(response.organizations);
+                    },
+                    error: function(xhr) {
+                        alert('Error loading organizations: ' + xhr.responseText);
+                    }
+                });
+            }
+
+            function updateStats(stats) {
+                $('#totalOrgs').text(stats.total);
+                $('#pendingOrgs').text(stats.pending);
+                $('#activeOrgs').text(stats.active);
+            }
+
+            function populateOrganizationsTable(organizations) {
+                const tbody = $('#organizationsTable');
+                tbody.empty();
+
+                organizations.forEach(org => {
+                    const row = `
+                        <tr data-org-id="${org.id}">
+                            <td>${org.name}</td>
+                            <td>${org.email}</td>
+                            <td>${org.type}</td>
+                            <td>${org.location}</td>
+                            <td><span class="status-badge status-${org.status.toLowerCase()}">${org.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-info view-org" data-org-id="${org.id}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                ${org.status === 'PENDING' ? `
+                                    <button class="btn btn-sm btn-approve approve-org" data-org-id="${org.id}">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-reject reject-org" data-org-id="${org.id}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                ` : ''}
+                            </td>
+                        </tr>
+                    `;
+                    tbody.append(row);
+                });
+            }
+
+            // View organization details
+            $(document).on('click', '.view-org', function() {
+                const orgId = $(this).data('org-id');
+                $.ajax({
+                    url: `/api/admin/organizations/${orgId}/`,
+                    method: 'GET',
+                    success: function(org) {
+                        $('#modalOrgName').text(org.name);
+                        $('#modalOrgEmail').text(org.email);
+                        $('#modalOrgPhone').text(org.phone);
+                        $('#modalOrgType').text(org.type);
+                        $('#modalOrgLocation').text(org.location);
+                        $('#modalOrgLicense').text(org.license_number);
+                        $('#modalOrgDescription').text(org.description);
+                        $('#modalOrgRegDate').text(new Date(org.registration_date).toLocaleDateString());
+                        $('#modalOrgStatus').html(`<span class="status-badge status-${org.status.toLowerCase()}">${org.status}</span>`);
+                        $('#modalOrgCertificate').attr('href', org.certificate_url);
+
+                        const modalActions = $('#modalActions');
+                        modalActions.empty();
+
+                        if (org.status === 'PENDING') {
+                            modalActions.append(`
+                                <button class="btn btn-approve approve-org" data-org-id="${org.id}">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-reject reject-org" data-org-id="${org.id}">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            `);
+                        }
+
+                        $('#organizationModal').modal('show');
+                    },
+                    error: function(xhr) {
+                        alert('Error loading organization details: ' + xhr.responseText);
+                    }
+                });
+            });
+
+            // Approve organization
+            $(document).on('click', '.approve-org', function() {
+                const orgId = $(this).data('org-id');
+                if (confirm('Are you sure you want to approve this organization?')) {
+                    updateOrganizationStatus(orgId, 'approve');
+                }
+            });
+
+            // Reject organization
+            $(document).on('click', '.reject-org', function() {
+                const orgId = $(this).data('org-id');
+                if (confirm('Are you sure you want to reject this organization?')) {
+                    updateOrganizationStatus(orgId, 'reject');
+                }
+            });
+
+            function updateOrganizationStatus(orgId, action) {
+                $.ajax({
+                    url: `/api/admin/organizations/${orgId}/${action}/`,
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    success: function(response) {
+                        $('#organizationModal').modal('hide');
+                        loadOrganizations($('#statusFilter').val());
+                        alert(`Organization ${action}d successfully!`);
+                    },
+                    error: function(xhr) {
+                        alert(`Error ${action}ing organization: ` + xhr.responseText);
+                    }
+                });
+            }
+
+            // Get CSRF token from cookies
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
+    </script>
+</body>
+</html>

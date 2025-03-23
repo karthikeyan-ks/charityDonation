@@ -1,0 +1,3 @@
+# Ignore environment variables file
+# Ignore environment variables file
+/backend/.env

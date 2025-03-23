@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Unite to Uplift - Donor Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Unite to Uplift Donor Dashboard" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/icomoon.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/superfish.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-title {
+            color: #1ABC9C;
+            margin: 0;
+        }
+        
+        .donation-list {
+            margin-top: 20px;
+        }
+        
+        .donation-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .donation-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .donation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .donation-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .donation-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .status-available {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .status-pending {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .status-donated {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .donation-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .donation-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #1ABC9C;
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            color: #1ABC9C;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script src="/static/js/modernizr-2.6.2.min.js"></script>
+    <script>
+        // Global logout function
+        function logout() {
+            console.log("Global logout function called");
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            
+            // Clear cookies
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, 
+                "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+            
+            // Redirect to home page
+            window.location.href = "index.html";
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <div id="fh5co-wrapper">
+        <div id="fh5co-page">
+            <header id="fh5co-header-section" class="sticky-banner">
+                <div class="container">
+                    <div class="nav-header">
+                        <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+                        <h1 id="fh5co-logo"><a href="/index.html">UNITE TO UPLIFT</a></h1>
+                        <nav id="fh5co-menu-wrap" role="navigation">
+                            <ul class="sf-menu" id="fh5co-primary-menu">
+                                <li><a href="/index.html"><span class="icon_house_alt"></span> Home</a></li>
+                                <li><a href="/donsubmit.html"><span class="icon_gift"></span> Submit Donation</a></li>
+                                <li class="active"><a href="/donor-dashboard.html"><span class="icon_document_alt"></span> My Donations</a></li>
+                                <li><a href="#" onclick="logout(); return false;" id="logoutBtn"><span class="icon_key_alt"></span> Logout</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h2 class="dashboard-title">My Donations</h2>
+                    <a href="/donsubmit.html" class="btn btn-primary">Submit New Donation</a>
+                </div>
+                
+                <div class="donation-list" id="donationList">
+                    <!-- Donations will be loaded here dynamically -->
+                </div>
+            </div>
+
+            <footer>
+                <div id="footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 text-center">
+                                <p class="fh5co-social-icons">
+                                    <a href="#"><i class="icon-twitter2"></i></a>
+                                    <a href="#"><i class="icon-facebook2"></i></a>
+                                    <a href="#"><i class="icon-instagram"></i></a>
+                                    <a href="#"><i class="icon-dribbble2"></i></a>
+                                    <a href="#"><i class="icon-youtube"></i></a>
+                                </p>
+                                <p>Copyright 2025 ABSS <a href="#">CommunityDonation</a>. All Rights Reserved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery.easing.1.3.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.waypoints.min.js"></script>
+    <script src="/static/js/sticky.js"></script>
+    <script src="/static/js/jquery.stellar.min.js"></script>
+    <script src="/static/js/hoverIntent.js"></script>
+    <script src="/static/js/superfish.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/token-manager.js"></script>
+    <script src="/static/js/auth-check.js"></script>
+    <script src="/static/js/logout-handler.js"></script>
+    <script src="/static/js/donor-dashboard.js"></script>
+    <script>
+        // Check authentication status
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!isAuthenticated('donor')) {
+                alert('You must be logged in as a donor to access this page');
+                window.location.href = '/donor.html';
+                return;
+            }
+            
+            // Display user info
+            const userInfo = localStorage.getItem('userEmail') || '';
+            const userName = localStorage.getItem('userName') || userInfo || 'Donor';
+            const userNameElement = document.getElementById('userName');
+            if (userNameElement) {
+                userNameElement.textContent = userName;
+            }
+            
+            // Note: Logout is now handled by logout-handler.js
+        });
+
+        // Direct logout handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Donor dashboard logout clicked");
+                    
+                    // Clear ALL localStorage
+                    localStorage.clear();
+                    
+                    // Clear sessionStorage
+                    sessionStorage.clear();
+                    
+                    // Clear cookies
+                    document.cookie.split(";").forEach(function(c) {
+                        document.cookie = c.replace(/^ +/, "").replace(/=.*/, 
+                        "=;expires=" + new Date().toUTCString() + ";path=/");
+                    });
+                    
+                    // Force redirect to homepage
+                    window.location.replace('index.html');
+                });
+            }
+        });
+
+        // Function to load donations
+        async function loadDonations() {
+            try {
+                // Use TokenManager for authenticated request
+                const response = await fetch('/api/items/items/', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('access')
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load donations: ${response.status}`);
+                }
+                
+                const donations = await response.json();
+                const donationList = document.getElementById('donationList');
+                
+                if (donations.length === 0) {
+                    showEmptyState();
+                    return;
+                }
+                
+                donationList.innerHTML = donations.map(createDonationItem).join('');
+            } catch (error) {
+                console.error('Error loading donations:', error);
+                showEmptyState();
+            }
+        }
+        
+        function showEmptyState() {
+            const donationList = document.getElementById('donationList');
+            donationList.innerHTML = `
+                <div class="empty-state">
+                    <i class="icon-gift"></i>
+                    <p>You haven't submitted any donations yet or there was an error loading your donations.</p>
+                    <a href="donsubmit.html" class="btn btn-primary mt-3">Make a Donation</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html> 

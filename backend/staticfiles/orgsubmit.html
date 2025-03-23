@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Unite to Uplift - Organization Needs Assessment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Unite to Uplift Organization Needs Assessment" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/superfish.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .needs-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        
+        .welcome-banner {
+            background-color: #1ABC9C;
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .welcome-banner h3 {
+            margin-top: 0;
+            color: white;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+        }
+        
+        .form-section h3 {
+            margin-top: 0;
+            color: #1ABC9C;
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background-color: #1ABC9C;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+        }
+        
+        .btn-primary:hover {
+            background-color: #148f77;
+        }
+        
+        .submit-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .submit-btn {
+            min-width: 200px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+        }
+        
+        .needs-page-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1ABC9C;
+        }
+        
+        .help-block {
+            color: #777;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .required-field::after {
+            content: " *";
+            color: #e53935;
+        }
+        
+        .resource-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .remove-resource {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #e53935;
+            cursor: pointer;
+        }
+        
+        .add-resource-btn {
+            margin-top: 10px;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+    <div id="fh5co-wrapper">
+        <div id="fh5co-page">
+            <div class="header-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 text-left fh5co-link">
+                            <a href="#">FAQ</a>
+                            <a href="#">Forum</a>
+                            <a href="#">Contact</a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 text-right fh5co-social">
+                            <a href="#" class="grow"><i class="icon-facebook2"></i></a>
+                            <a href="#" class="grow"><i class="icon-twitter2"></i></a>
+                            <a href="#" class="grow"><i class="icon-instagram2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <header id="fh5co-header-section" class="sticky-banner">
+                <div class="container">
+                    <div class="nav-header">
+                        <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+                        <h1 id="fh5co-logo"><a href="index.html">UNITE TO UPLIFT</a></h1>
+                        <nav id="fh5co-menu-wrap" role="navigation">
+                            <ul class="sf-menu" id="fh5co-primary-menu">
+                                <li><a href="index.html">Home</a></li>
+								<li class="active">
+                                    <a href="#" class="fh5co-sub-ddown">My Account</a>
+                                    <ul class="fh5co-sub-menu">
+                                        <li><a href="index.html">Logout</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="about.html">About</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="container">
+                <div class="needs-container">
+                    <h2 class="needs-page-header">Organization Needs Assessment</h2>
+                
+                    
+                    <form id="needsForm" action="needs-confirmation.html">
+                        <!-- Location Section -->
+                        
+                        
+                        <!-- Resource Needs Section -->
+                        <div class="form-section">
+                            <h3>Resource Needs</h3>
+                            <p>Please specify what resources your organization needs and in what quantities</p>
+                            
+                            <div id="resourceContainer">
+                                <div class="resource-item">
+                                    <span class="remove-resource"><i class="icon-cross"></i></span>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="resourceType1" class="required-field">Resource Type</label>
+                                                <select class="form-control" id="resourceType1" required>
+                                                    <option value="" disabled selected>Select resource type</option>
+                                                    <option value="food">Food</option>
+                                                    <option value="clothing">Clothing</option>
+                                                    <option value="medical">Medical Supplies</option>
+                                                    <option value="school">School Supplies</option>
+                                                    <option value="electronic">Electronics</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="quantity1" class="required-field">Quantity Needed</label>
+                                                <input type="text" class="form-control" id="quantity1" placeholder="e.g. 500 lbs, 200 items" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description1">Specific Description</label>
+                                        <textarea class="form-control" id="description1" rows="2" placeholder="Please describe the specific items needed, condition requirements, etc."></textarea>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn btn-default add-resource-btn" id="addResource">
+                                <i class="icon-plus"></i> Add Another Resource Need
+                            </button>
+                        </div>
+                        
+                        <!-- Logistics Section -->
+                        <div class="form-section">
+                            <h3>Logistics Information</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pickupAvailable" class="required-field">Pickup Available?</label>
+                                        <select class="form-control" id="pickupAvailable" required>
+                                            <option value="" disabled selected>Select an option</option>
+                                            <option value="yes">Yes, we can pick up donations</option>
+                                            <option value="limited">Limited pickup capability</option>
+                                            <option value="no">No, donors must deliver</option>
+                                        </select>
+                                    </div>
+                                </div>
+            
+                            </div>
+                            <div class="form-group">
+                                <label for="logisticsPartners">Location</label>
+                                <textarea class="form-control" id="logisticsPartners" rows="2" placeholder="Address"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="specialRequirements">Contact Number</label>
+                                <textarea class="form-control" id="specialRequirements" rows="2" placeholder="Phone Number"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Schedule Section -->
+                        <div class="form-section">
+                            <h3>Donation Schedule</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="donationDays" class="required-field">Days Available for Receiving Donations</label>
+                                        <select multiple class="form-control" id="donationDays" required>
+                                            <option value="monday">Monday</option>
+                                            <option value="tuesday">Tuesday</option>
+                                            <option value="wednesday">Wednesday</option>
+                                            <option value="thursday">Thursday</option>
+                                            <option value="friday">Friday</option>
+                                            <option value="saturday">Saturday</option>
+                                            <option value="sunday">Sunday</option>
+                                        </select>
+                                        <span class="help-block">Hold Ctrl/Cmd to select multiple days</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="donationHours" class="required-field">Hours Available</label>
+                                        <input type="text" class="form-control" id="donationHours" placeholder="e.g. 9AM-5PM, 10AM-2PM" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="schedulingNotes">Additional Scheduling Notes</label>
+                                <textarea class="form-control" id="schedulingNotes" rows="2" placeholder="Any additional information about your donation receiving schedule or process"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Information -->
+                        <div class="form-section">
+                            <h3>Additional Information</h3>
+                            <div class="form-group">
+                                <label for="additionalNotes">Additional Notes</label>
+                                <textarea class="form-control" id="additionalNotes" rows="3" placeholder="Any other information you'd like potential donors to know"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="submit-container">
+                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <footer>
+                <div id="footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 text-center">
+                                <p class="fh5co-social-icons">
+                                    <a href="#"><i class="icon-twitter2"></i></a>
+                                    <a href="#"><i class="icon-facebook2"></i></a>
+                                    <a href="#"><i class="icon-instagram"></i></a>
+                                    <a href="#"><i class="icon-dribbble2"></i></a>
+                                    <a href="#"><i class="icon-youtube"></i></a>
+                                </p>
+                                <p>Copyright 2025 ABSS <a href="#">CommunityDonation</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="#" target="_blank">we.co</a> / Demo Images: <a href="#" target="_blank">Unsplash</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/sticky.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/hoverIntent.js"></script>
+    <script src="js/superfish.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Add resource item functionality
+        document.getElementById('addResource').addEventListener('click', function() {
+            var container = document.getElementById('resourceContainer');
+            var resourceCount = container.children.length + 1;
+            
+            var newResource = document.createElement('div');
+            newResource.className = 'resource-item';
+            newResource.innerHTML = `
+                <span class="remove-resource"><i class="icon-cross"></i></span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="resourceType${resourceCount}" class="required-field">Resource Type</label>
+                            <select class="form-control" id="resourceType${resourceCount}" required>
+                                <option value="" disabled selected>Select resource type</option>
+                                <option value="food">Food</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="furniture">Furniture</option>
+                                <option value="medical">Medical Supplies</option>
+                                <option value="school">School Supplies</option>
+                                <option value="electronic">Electronics</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="quantity${resourceCount}" class="required-field">Quantity Needed</label>
+                            <input type="text" class="form-control" id="quantity${resourceCount}" placeholder="e.g. 500 lbs, 200 items" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description${resourceCount}">Specific Description</label>
+                    <textarea class="form-control" id="description${resourceCount}" rows="2" placeholder="Please describe the specific items needed, condition requirements, etc."></textarea>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="frequency${resourceCount}">Frequency</label>
+                            <select class="form-control" id="frequency${resourceCount}">
+                                <option value="" disabled selected>How often needed?</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="quarterly">Quarterly</option>
+                                <option value="annually">Annually</option>
+                                <option value="onetime">One-time Need</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="priority${resourceCount}">Priority Level</label>
+                            <select class="form-control" id="priority${resourceCount}">
+                                <option value="" disabled selected>Select priority</option>
+                                <option value="urgent">Urgent (Needed ASAP)</option>
+                                <option value="high">High Priority</option>
+                                <option value="medium">Medium Priority</option>
+                                <option value="low">Low Priority</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(newResource);
+            
+            // Add event listeners to new remove buttons
+            var removeButtons = document.querySelectorAll('.remove-resource');
+            removeButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    if (container.children.length > 1) {
+                        this.parentElement.remove();
+                    }
+                });
+            });
+        });
+        
+        // Initial setup for remove buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            var removeButtons = document.querySelectorAll('.remove-resource');
+            var container = document.getElementById('resourceContainer');
+            
+            removeButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    if (container.children.length > 1) {
+                        this.parentElement.remove();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
