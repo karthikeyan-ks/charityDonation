@@ -334,7 +334,8 @@
                 <div class="needs-container">
                     <h2 class="needs-page-header">Organization Needs Assessment</h2>
                     
-                    <form method="POST" action="{% url 'submit_form_organization' %}" >
+                    <form method="POST" action="{% url 'submit_form_organization' %}">
+                       {% csrf_token %}
                         <!-- Resource Needs Section -->
                         <div class="form-section">
                             <h3>Resource Needs</h3>

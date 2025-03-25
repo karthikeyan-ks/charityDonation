@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Dashboard - Unite to Uplift</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/icomoon.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Admin Panel Specific Styles */
+        .admin-dashboard {
+            padding: 30px 0;
+        }
+        
+        .admin-card {
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .admin-sidebar {
+            background: #2D3E50;
+            color: white;
+            padding: 20px 0;
+            min-height: calc(100vh - 100px);
+            border-radius: 8px;
+        }
+        
+        .admin-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .admin-sidebar li {
+            padding: 10px 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-sidebar li:hover, .admin-sidebar li.active {
+            background: rgba(255,255,255,0.1);
+            border-left: 3px solid #F85A16;
+        }
+        
+        .admin-sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .admin-sidebar .icon {
+            margin-right: 10px;
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stats-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #F85A16;
+        }
+        
+        .stats-card .label {
+            text-transform: uppercase;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-pending {
+            background: #FFF3CD;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background: #D4EDDA;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+        
+        .admin-panel-logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .admin-header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .admin-dropdown .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 id="fh5co-logo"><a href="/">UNITE TO UPLIFT</a></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="dropdown admin-dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="adminDropdown" data-toggle="dropdown">
+                            <i class="icon-user"></i> <span id="adminName">Admin Name</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" id="changePasswordLink">Change Password</a>
+                            <a class="dropdown-item" href="/admin-login/" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container admin-dashboard">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="admin-sidebar">
+                    <div class="admin-panel-logo">Admin Panel</div>
+                    <ul>
+                        <li class="active"><a href="/admin-dashboard.html"><i class="icon icon-home3"></i> Dashboard</a></li>
+                        <li><a href="/admin-donors.html"><i class="icon icon-users"></i> Donors</a></li>
+                        <li><a href="/admin-organizations.html"><i class="icon icon-office"></i> Organizations</a></li>
+                        <li><a href="/index.html"><i class="icon icon-exit"></i> Back to Website</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <h3>Dashboard</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="admin-card stats-card">
+                            <i class="icon icon-users" style="font-size: 32px; color: #F85A16;"></i>
+                            <div class="number" id="totalDonors">0</div>
+                            <div class="label">Total Donors</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="admin-card stats-card">
+                            <i class="icon icon-office" style="font-size: 32px; color: #F85A16;"></i>
+                            <div class="number" id="totalOrganizations">0</div>
+                            <div class="label">Organizations</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="admin-card">
+                            <h4>Recent Donations</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Donor</th>
+                                        <th>Organization</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentDonationsTable">
+                                    <!-- Donations will be loaded dynamically -->
+                                </tbody>
+                            </table>
+                            <div class="text-right">
+                                <a href="/admin-donations.html" class="btn btn-sm btn-primary">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-card">
+                            <h4>Organization Approvals</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Organization</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="organizationApprovalsTable">
+                                    <!-- Organizations will be loaded dynamically -->
+                                </tbody>
+                            </table>
+                            <div class="text-right">
+                                <a href="/admin-organizations.html" class="btn btn-sm btn-primary">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery.easing.1.3.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check if user is logged in as admin
+            const token = localStorage.getItem('access');
+            const userType = localStorage.getItem('userType');
+            
+            if (!token || userType !== 'admin') {
+                console.log('Not logged in as admin, redirecting to login page');
+                window.location.href = '/admin-login-page.html';
+                return;
+            }
+            
+            // Update admin name from localStorage
+            const adminName = localStorage.getItem('username') || 'Admin';
+            $('#adminDropdown').html(`<i class="icon-user"></i> ${adminName}`);
+
+            // Handle logout
+            $('#logoutLink').click(function(e) {
+                e.preventDefault();
+                // Clear all authentication data
+                localStorage.removeItem('access');
+                localStorage.removeItem('userType');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('username');
+                // Redirect to login page
+                window.location.href = '/admin-login-page.html';
+            });
+
+            // Fetch dashboard data
+            function fetchDashboardData() {
+                // Get JWT token from localStorage
+                const token = localStorage.getItem('access');
+                
+                if (!token) {
+                    // No token, redirect to login
+                    window.location.href = '/admin-login-page.html';
+                    return;
+                }
+                
+                $.ajax({
+                    url: '/api/admin/dashboard/',
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    success: function(response) {
+                        // Update statistics
+                        $('#totalDonors').text(response.stats.total_donors || 0);
+                        $('#totalOrganizations').text(response.stats.total_organizations || 0);
+
+                        // Update recent donations
+                        if (response.recent_donations && response.recent_donations.length > 0) {
+                            $('#recentDonationsTable').empty();
+                            response.recent_donations.forEach(function(donation) {
+                                $('#recentDonationsTable').append(`
+                                    <tr>
+                                        <td>${donation.donor_name}</td>
+                                        <td>${donation.organization_name}</td>
+                                        <td><span class="status-badge status-${donation.status.toLowerCase()}">${donation.status}</span></td>
+                                    </tr>
+                                `);
+                            });
+                        }
+
+                        // Update organization approvals
+                        if (response.organization_approvals && response.organization_approvals.length > 0) {
+                            $('#organizationApprovalsTable').empty();
+                            response.organization_approvals.forEach(function(org) {
+                                $('#organizationApprovalsTable').append(`
+                                    <tr>
+                                        <td>${org.name}</td>
+                                        <td>${new Date(org.date).toLocaleDateString()}</td>
+                                        <td><span class="status-badge status-${org.status.toLowerCase()}">${org.status}</span></td>
+                                    </tr>
+                                `);
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 401 || xhr.status === 403) {
+                            console.error('Authentication error:', xhr.responseText);
+                            // Unauthorized, redirect to login
+                            window.location.href = '/admin-login-page.html';
+                        } else {
+                            console.error('Error fetching dashboard data:', xhr.responseText);
+                        }
+                    }
+                });
+            }
+
+            // Call fetchDashboardData on page load
+            fetchDashboardData();
+
+            // Refresh data every 30 seconds
+            setInterval(fetchDashboardData, 30000);
+        });
+    </script>
+</body>
+</html>

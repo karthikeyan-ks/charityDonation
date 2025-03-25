@@ -167,6 +167,7 @@ def organization_login(request):
             
             try:
                 user = CustomUser.objects.get(email=email, user_type='ORGANIZATION')
+                print(user,password)
                 org_profile = Organization.objects.get(user=user)
                 
                 if org_profile.approval_status != 'APPROVED':
@@ -174,8 +175,9 @@ def organization_login(request):
                         'success': False,
                         'message': 'Your account is pending approval. Please wait for admin approval.'
                     }, status=400)
-                
-                user = authenticate(username=user.username, password=password)
+                users = User.objects.filter(username=email,password=password)
+                user = authenticate(request,username=email, password=password)
+                print(user,users)
                 if user is not None and user.is_active:
                     login(request, user)
                     # Generate JWT token
@@ -195,24 +197,29 @@ def organization_login(request):
                         'message': 'Invalid password or inactive account.'
                     }, status=400)
             except CustomUser.DoesNotExist:
+                print("Custom User doesnt exist...")
                 return JsonResponse({
                     'success': False,
                     'message': 'No account found with this email address. Please register first.'
                 }, status=400)
             except Organization.DoesNotExist:
+                print('Organization doesnt exist..')
                 return JsonResponse({
                     'success': False,
                     'message': 'Organization profile not found.'
                 }, status=400)
         except json.JSONDecodeError:
+            print('Parsing error')
             return JsonResponse({
                 'success': False,
                 'message': 'Invalid request format'
             }, status=400)
+        
     return JsonResponse({
         'success': False,
         'message': 'Invalid request method'
     }, status=405)
+    
 
 @csrf_exempt
 def organization_register(request):
@@ -248,18 +255,20 @@ def organization_register(request):
                     'success': False,
                     'message': 'Email already registered'
                 }, status=400)
-            
+            print(password)
             # Create user with is_active=False until approved
             user = CustomUser.objects.create_user(
                 username=email,
                 email=email,
-                password=password,
                 first_name=first_name,
                 last_name=last_name,
                 user_type='ORGANIZATION',
                 is_active=False,  # User will be activated upon approval
                 is_organization=True
             )
+            user.set_password(password)
+            user.save()
+            print(user.password)
             
             # Create organization profile
             organization = Organization.objects.create(
@@ -340,6 +349,9 @@ def organization_register(request):
         'success': False,
         'message': 'Invalid request method'
     }, status=405)
+    
+def organization_form_submit(request):
+    return render(request,'orgsubmit.html')
 
 @csrf_exempt
 @user_passes_test(is_admin)

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Unite to Uplift - Donation Submission</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Unite to Uplift Donation Submission" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/icomoon.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/superfish.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .donation-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        
+        .donation-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1ABC9C;
+        }
+        
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+        }
+        
+        .form-section h4 {
+            color: #1ABC9C;
+            margin-bottom: 15px;
+        }
+        
+        .btn-primary {
+            background-color: #1ABC9C;
+            border: none;
+            padding: 10px 20px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #148f77;
+        }
+        
+        .upload-preview {
+            max-width: 150px;
+            max-height: 150px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            display: none;
+        }
+        
+        .category-select {
+            margin-bottom: 15px;
+        }
+        
+        .donation-success {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .donation-success i {
+            font-size: 50px;
+            color: #1ABC9C;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .custom-field {
+            display: none;
+        }
+        
+        .condition-wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .condition-option {
+            width: 19%;
+            text-align: center;
+            cursor: pointer;
+            padding: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .condition-option.selected {
+            background-color: #1ABC9C;
+            color: white;
+            border-color: #1ABC9C;
+        }
+        
+        .user-info-box {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+     
+        
+        .pickup-options label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="/static/js/modernizr-2.6.2.min.js"></script>
+    <script>
+        // Global logout function
+        function logout() {
+            console.log("Global logout function called");
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            
+            // Clear cookies
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, 
+                "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+            
+            // Redirect to home page
+            window.location.href = "/index.html";
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <div id="fh5co-wrapper">
+        <div id="fh5co-page">
+            <div class="header-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 text-left fh5co-link">
+                            <a href="#">FAQ</a>
+                            <a href="#">Forum</a>
+                            <a href="#">Contact</a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 text-right fh5co-social">
+                            <a href="#" class="grow"><i class="icon-facebook2"></i></a>
+                            <a href="#" class="grow"><i class="icon-twitter2"></i></a>
+                            <a href="#" class="grow"><i class="icon-instagram2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <header id="fh5co-header-section" class="sticky-banner">
+                <div class="container">
+                    <div class="nav-header">
+                        <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+                        <h1 id="fh5co-logo"><a href="/index.html">UNITE TO UPLIFT</a></h1>
+                        <nav id="fh5co-menu-wrap" role="navigation">
+                            <ul class="sf-menu" id="fh5co-primary-menu">
+                                <li><a href="/index.html">Home</a></li>
+                                <li class="active"><a href="/donsubmit.html">Submit Donation</a></li>
+                                <li><a href="/donor-dashboard.html">My Donations</a></li>
+                                <li><a href="#" onclick="logout(); return false;">Logout</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="container">
+                <!-- Donation Form -->
+                <div class="donation-container" id="donationForm">
+                    <h2 class="donation-header">Donate an Item</h2>
+                    
+                    <div class="user-info-box">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Welcome back, </strong><span id="userFullName">Donor</span></p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <p><span id="userEmail">donor123@.com</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="itemDonationForm">
+                        <!-- Item Category Section -->
+                        <div class="form-section">
+                            <h4>Item Category</h4>
+                            <div class="form-group category-select">
+                                <label for="itemCategory">Select Category</label>
+                                <select class="form-control" id="itemCategory" required>
+                                    <option value="">-- Select a category --</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="toys">Toys & Games</option>
+                                    <option value="books">Books & Education</option>
+                                    <option value="medical">Medical Supplies</option>
+                                    <option value="food">Non-perishable Food</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group custom-field" id="otherCategoryField">
+                                <label for="otherCategory">Please specify category</label>
+                                <input type="text" class="form-control" id="otherCategory" placeholder="Enter category name">
+                            </div>
+                        </div>
+                        
+                        <!-- Item Details Section -->
+                        <div class="form-section">
+                            <h4>Item Details</h4>
+                            <div class="form-group">
+                                <label for="itemName">Item Name</label>
+                                <input type="text" class="form-control" id="itemName" placeholder="Enter name of item" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="itemDescription">Description</label>
+                                <textarea class="form-control" id="itemDescription" rows="3" placeholder="Describe the item in detail (size, color, brand, etc.)" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Condition</label>
+                                <div class="condition-wrapper">
+                                    <div class="condition-option" data-value="new">New</div>
+                                    <div class="condition-option" data-value="likenew">Like New</div>
+                                    <div class="condition-option" data-value="good">Good</div>
+                                    <div class="condition-option" data-value="fair">Fair</div>
+                                    <div class="condition-option" data-value="poor">Poor</div>
+                                </div>
+                                <input type="hidden" id="itemCondition" name="itemCondition" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="itemQuantity">Quantity</label>
+                                <input type="number" class="form-control" id="itemQuantity" min="1" value="1" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="itemPhotos">Upload Photos (up to 3)</label>
+                                <input type="file" class="form-control" id="itemPhotos" accept="image/*" multiple>
+                                <small class="form-text text-muted">Clear photos help organizations understand your donation better.</small>
+                                <div class="row" id="photoPreviewContainer">
+                                    <div class="col-md-4">
+                                        <img id="photoPreview1" class="upload-preview" src="#" alt="Preview">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img id="photoPreview2" class="upload-preview" src="#" alt="Preview">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img id="photoPreview3" class="upload-preview" src="#" alt="Preview">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category-specific fields will be inserted here dynamically -->
+                        <div id="categorySpecificFields"></div>
+                        
+                        <!-- Location Section -->
+                        <div class="form-section">
+                            <h4>Pickup Location</h4>
+                            
+                            <div class="form-group">
+                                <label for="addressLine1">Address or location for collection</label>
+                                <input type="text" class="form-control" id="addressLine1" placeholder="Street address" required>
+                            </div>
+                            
+
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <input type="text" class="form-control" id="city" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="state">State</label>
+                                        <input type="text" class="form-control" id="state" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="zipCode">Zip Code</label>
+                                        <input type="text" class="form-control" id="zipCode" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                        <!-- Pickup Availability -->
+                        <div class="form-section">
+                            <h4>Pickup Availability</h4>
+                            <div class="form-group pickup-options">
+                                <label>
+                                    <input type="checkbox" name="availability" value="weekday-morning"> Weekday Mornings (9am - 12pm)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="availability" value="weekday-afternoon"> Weekday Afternoons (12pm - 5pm)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="availability" value="weekday-evening"> Weekday Evenings (5pm - 8pm)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="availability" value="weekend-morning"> Weekend Mornings (9am - 12pm)
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="availability" value="weekend-afternoon"> Weekend Afternoons (12pm - 5pm)
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pickupNotes">Additional Notes for Pickup</label>
+                                <textarea class="form-control" id="pickupNotes" rows="2" placeholder="Any special instructions for pickup (e.g., Ring bell, call before arrival)"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Section -->
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label for="additionalNotes">Additional Notes (Optional)</label>
+                                <textarea class="form-control" id="additionalNotes" rows="3" placeholder="Any other information that might be helpful"></textarea>
+                            </div>
+                            
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="termsAgreement" required> I confirm that this item is in the stated condition and I am the rightful owner.
+                                </label>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Submit Donation</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Success Message -->
+                <div class="donation-container donation-success" id="donationSuccess">
+                    <i class="icon-check"></i>
+                    <h3>Thank You for Your Donation!</h3>
+                    <p>Your donation has been successfully submitted. Organizations will review your donation soon.</p>
+                    <div class="text-center mt-4">
+                        <a href="donor-dashboard.html" class="btn btn-primary">Back to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+            
+            <footer>
+                <div id="footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 text-center">
+                                <p class="fh5co-social-icons">
+                                    <a href="#"><i class="icon-twitter2"></i></a>
+                                    <a href="#"><i class="icon-facebook2"></i></a>
+                                    <a href="#"><i class="icon-instagram"></i></a>
+                                    <a href="#"><i class="icon-dribbble2"></i></a>
+                                    <a href="#"><i class="icon-youtube"></i></a>
+                                </p>
+                                <p>Copyright 2025 <a href="#">Unite to Uplift</a>. All Rights Reserved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery.easing.1.3.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.waypoints.min.js"></script>
+    <script src="/static/js/sticky.js"></script>
+    <script src="/static/js/jquery.stellar.min.js"></script>
+    <script src="/static/js/hoverIntent.js"></script>
+    <script src="/static/js/superfish.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/token-manager.js"></script>
+    <script src="/static/js/auth-check.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in as donor
+            if (!isAuthenticated('donor')) {
+                // Redirect to login if not authenticated as donor
+                alert('You must be logged in as a donor to access this page');
+                window.location.href = '/donor.html';
+                return;
+            }
+            
+            // Display user information
+            const userEmail = localStorage.getItem('userEmail') || '';
+            const userName = localStorage.getItem('userName') || userEmail || 'Donor';
+            
+            document.getElementById('userEmail').textContent = userEmail;
+            document.getElementById('userFullName').textContent = userName;
+            
+            // Handle condition selection
+            const conditionOptions = document.querySelectorAll('.condition-option');
+            conditionOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    conditionOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Set value in hidden input
+                    document.getElementById('itemCondition').value = this.dataset.value;
+                });
+            });
+            
+            // Show/hide "Other" category field
+            document.getElementById('itemCategory').addEventListener('change', function() {
+                const otherField = document.getElementById('otherCategoryField');
+                if (this.value === 'other') {
+                    otherField.style.display = 'block';
+                    document.getElementById('otherCategory').setAttribute('required', 'required');
+                } else {
+                    otherField.style.display = 'none';
+                    document.getElementById('otherCategory').removeAttribute('required');
+                }
+            });
+            
+            // Image preview
+            document.getElementById('itemPhotos').addEventListener('change', function(event) {
+                const files = event.target.files;
+                
+                // Clear all previews
+                for (let i = 1; i <= 3; i++) {
+                    const preview = document.getElementById('photoPreview' + i);
+                    preview.style.display = 'none';
+                    preview.src = '#';
+                }
+                
+                // Add new previews
+                for (let i = 0; i < Math.min(files.length, 3); i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('photoPreview' + (i + 1));
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Form submission
+            document.getElementById('itemDonationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                if (!this.checkValidity()) {
+                    // Form is invalid
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                // Get form data
+                const categoryValue = document.getElementById('itemCategory').value === 'other' 
+                    ? document.getElementById('otherCategory').value 
+                    : document.getElementById('itemCategory').value;
+                
+                const formData = {
+                    category: categoryValue,
+                    name: document.getElementById('itemName').value,
+                    description: document.getElementById('itemDescription').value,
+                    condition: document.getElementById('itemCondition').value,
+                    quantity: document.getElementById('itemQuantity').value,
+                    address: document.getElementById('addressLine1').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    zipCode: document.getElementById('zipCode').value,
+                    pickupNotes: document.getElementById('pickupNotes').value,
+                    additionalNotes: document.getElementById('additionalNotes').value,
+                    availability: Array.from(document.querySelectorAll('input[name="availability"]:checked'))
+                        .map(checkbox => checkbox.value)
+                };
+                
+                console.log('Donation submission:', formData);
+                
+                // Show success message
+                document.getElementById('donationForm').style.display = 'none';
+                document.getElementById('donationSuccess').style.display = 'block';
+                
+                // In a real application, you would send this data to your server
+                // For now, we'll simulate a successful submission
+                // Uncomment the below code when backend is ready:
+                
+                /*
+                fetch('/api/items/donate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TokenManager.getAccessToken()}`
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('donationForm').style.display = 'none';
+                        document.getElementById('donationSuccess').style.display = 'block';
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+                */
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Donors Management - Unite to Uplift</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/icomoon.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Admin Panel Specific Styles */
+        .admin-dashboard {
+            padding: 30px 0;
+        }
+        
+        .admin-card {
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-sidebar {
+            background: #2D3E50;
+            color: white;
+            padding: 20px 0;
+            min-height: calc(100vh - 100px);
+            border-radius: 8px;
+        }
+        
+        .admin-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .admin-sidebar li {
+            padding: 10px 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-sidebar li:hover, .admin-sidebar li.active {
+            background: rgba(255,255,255,0.1);
+            border-left: 3px solid #F85A16;
+        }
+        
+        .admin-sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .admin-sidebar .icon {
+            margin-right: 10px;
+        }
+        
+        .table-actions a {
+            margin: 0 5px;
+        }
+        
+        .admin-panel-logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .admin-header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .admin-dropdown .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+        
+        .modal-header {
+            background: #F85A16;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 id="fh5co-logo"><a href="/index.html">UNITE TO UPLIFT</a></h1>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="dropdown admin-dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="adminDropdown" data-toggle="dropdown">
+                            <i class="icon-user"></i> Admin Name
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" id="changePasswordLink">Change Password</a>
+                            <a class="dropdown-item" href="/admin-login-page.html" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container admin-dashboard">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="admin-sidebar">
+                    <div class="admin-panel-logo">Admin Panel</div>
+                    <ul>
+                        <li><a href="/admin-dashboard.html"><i class="icon icon-home3"></i> Dashboard</a></li>
+                        <li class="active"><a href="/admin-donors.html"><i class="icon icon-users"></i> Donors</a></li>
+                        <li><a href="/admin-organizations.html"><i class="icon icon-office"></i> Organizations</a></li>
+                        <li><a href="/index.html"><i class="icon icon-exit"></i> Back to Website</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Donors</h3>
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control" placeholder="Search donors..." id="searchDonors">
+                    </div>
+                </div>
+                
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="admin-card bg-primary text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-0">Total Donors</h5>
+                                    <h2 class="mb-0" id="totalDonors">0</h2>
+                                </div>
+                                <div>
+                                    <i class="icon-users" style="font-size: 48px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-card bg-success text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-0">Active Donors</h5>
+                                    <h2 class="mb-0" id="activeDonors">0</h2>
+                                </div>
+                                <div>
+                                    <i class="icon-user-check" style="font-size: 48px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Registration Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated dynamically -->
+                        </tbody>
+                    </table>
+                    
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Donor Modal -->
+    <div class="modal fade" id="viewDonorModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Donor Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><strong>Full Name:</strong></label>
+                                <p id="donorName"></p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Email:</strong></label>
+                                <p id="donorEmail"></p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Phone:</strong></label>
+                                <p id="donorPhone"></p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Address:</strong></label>
+                                <p id="donorAddress"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><strong>Registration Date:</strong></label>
+                                <p id="donorRegistrationDate"></p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Total Donations:</strong></label>
+                                <p id="donorTotalDonations">$0</p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Last Donation:</strong></label>
+                                <p id="donorLastDonation">None</p>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Status:</strong></label>
+                                <p id="donorStatus"><span class="badge badge-success">Active</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5>Donation History</h5>
+                    <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Organization</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                            <tbody id="donationHistoryTable">
+                                <tr>
+                                    <td colspan="4" class="text-center">No donation history available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the donor <strong id="donorToDelete"></strong>? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check if user is authenticated as admin
+            const accessToken = localStorage.getItem('access');
+            const userType = localStorage.getItem('userType');
+            
+            if (!accessToken || userType !== 'admin') {
+                alert('Please log in as an administrator to access this page.');
+                window.location.href = '/admin-login-page.html';
+                return;
+            }
+            
+            // Populate admin name from localStorage
+            const adminName = localStorage.getItem('username') || 'Admin';
+            $('#adminDropdown').html(`<i class="icon-user"></i> ${adminName}`);
+            
+            // Set up logout functionality
+            $('#logoutLink').on('click', function(e) {
+                e.preventDefault();
+                localStorage.clear();
+                window.location.href = '/admin-login-page.html';
+            });
+            
+            // Populate donors table
+            loadDonors();
+            
+            // Handle search functionality
+            $('#searchDonors').on('keyup', function() {
+                const searchTerm = $(this).val().trim();
+                if (searchTerm.length > 2 || searchTerm.length === 0) {
+                    loadDonors(searchTerm);
+                }
+            });
+            
+            // Event listener for view donor details
+            $(document).on('click', '.view-donor-btn', function(e) {
+                e.preventDefault();
+                const donorId = $(this).data('donor-id');
+                viewDonorDetails(donorId);
+            });
+            
+            // Event listener for delete buttons
+            $(document).on('click', '.delete-donor-btn', function(e) {
+                e.preventDefault();
+                const donorId = $(this).data('donor-id');
+                const donorName = $(this).data('donor-name');
+                
+                // Set name in confirmation modal
+                $('#donorToDelete').text(donorName);
+                
+                // Open confirm modal
+                $('#confirmDeleteModal').modal('show');
+                
+                // Set donor ID on confirm button
+                $('#confirmDeleteBtn').data('donor-id', donorId);
+            });
+            
+            // Confirm delete button
+            $('#confirmDeleteBtn').on('click', function() {
+                const donorId = $(this).data('donor-id');
+                
+                // Here we would normally send an AJAX request to delete the donor
+                // For now we'll just simulate deletion by removing from the table
+                
+                // Find and remove the row from the table
+                $(`tr[data-donor-id="${donorId}"]`).fadeOut(400, function() {
+                    $(this).remove();
+                    
+                    // Close the modal
+                    $('#confirmDeleteModal').modal('hide');
+                    
+                    // Show success message
+                    alert('Donor deleted successfully!');
+                });
+            });
+            
+            // Function to load donors from API
+            function loadDonors(searchTerm = '') {
+                // Show loading indicator
+                const donorsTable = $('table tbody');
+                donorsTable.html('<tr><td colspan="5" class="text-center">Loading donors...</td></tr>');
+                
+                // Prepare API URL
+                let apiUrl = '/api/admin/donors/';
+                if (searchTerm) {
+                    apiUrl += `?search=${encodeURIComponent(searchTerm)}`;
+                }
+                
+                // Fetch donors from API
+                fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch donors');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success && data.donors) {
+                        // Update stats if available
+                        if (data.stats) {
+                            $('#totalDonors').text(data.stats.total);
+                            $('#activeDonors').text(data.stats.active);
+                        }
+                        
+                        // Clear table
+                        donorsTable.empty();
+                        
+                        // Add donors to table
+                        if (data.donors.length === 0) {
+                            donorsTable.html('<tr><td colspan="5" class="text-center">No donors found</td></tr>');
+                        } else {
+                            data.donors.forEach(donor => {
+                                const donorName = donor.name || donor.username;
+                                const registrationDate = donor.registration_date ? 
+                                    new Date(donor.registration_date).toLocaleDateString() : 'N/A';
+                                
+                                donorsTable.append(`
+                                    <tr data-donor-id="${donor.id}">
+                                        <td>${donorName}</td>
+                                        <td>${donor.email}</td>
+                                        <td>${donor.phone || 'N/A'}</td>
+                                        <td>${registrationDate}</td>
+                                        <td class="table-actions">
+                                            <a href="#" class="btn btn-sm btn-info view-donor-btn" data-donor-id="${donor.id}">
+                                                <i class="icon-eye"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-sm btn-danger delete-donor-btn" 
+                                               data-donor-id="${donor.id}" data-donor-name="${donorName}">
+                                                <i class="icon-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                `);
+                            });
+                        }
+                    } else {
+                        donorsTable.html('<tr><td colspan="5" class="text-center">Failed to load donors</td></tr>');
+                        console.error('API response error:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching donors:', error);
+                    donorsTable.html(`<tr><td colspan="5" class="text-center text-danger">Error: ${error.message}</td></tr>`);
+                });
+            }
+            
+            // Function to view donor details
+            function viewDonorDetails(donorId) {
+                // Fetch donor details from API
+                fetch(`/api/admin/donors/${donorId}/`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch donor details');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success && data.donor) {
+                        const donor = data.donor;
+                        
+                        // Populate modal with donor data
+                        $('#donorName').text(donor.name || donor.username);
+                        $('#donorEmail').text(donor.email);
+                        $('#donorPhone').text(donor.phone_number || 'N/A');
+                        $('#donorAddress').text(donor.address || 'N/A');
+                        $('#donorRegistrationDate').text(
+                            donor.registration_date ? 
+                            new Date(donor.registration_date).toLocaleDateString() : 'N/A'
+                        );
+                        
+                        // Set status badge
+                        const statusBadge = donor.is_active ? 
+                            '<span class="badge badge-success">Active</span>' : 
+                            '<span class="badge badge-secondary">Inactive</span>';
+                        $('#donorStatus').html(statusBadge);
+                        
+                        // For this demo, we'll use placeholder donation data
+                        // In a real implementation, this would come from the API
+                        $('#donorTotalDonations').text('$0');
+                        $('#donorLastDonation').text('None');
+                        
+                        // Clear donation history table
+                        $('#donationHistoryTable').html('<tr><td colspan="4" class="text-center">No donation history available</td></tr>');
+                        
+                        // Show the modal
+                        $('#viewDonorModal').modal('show');
+                    } else {
+                        alert('Failed to load donor details');
+                        console.error('API response error:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching donor details:', error);
+                    alert(`Error: ${error.message}`);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

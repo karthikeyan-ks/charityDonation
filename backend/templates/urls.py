@@ -24,7 +24,7 @@ from users.views import (
     UserViewSet, donor_login, organization_login, organization_register,
     admin_approve_organization, admin_list_organizations, admin_get_organization,
     admin_login, admin_dashboard, approve_organization, check_organization_status,
-    admin_list_donors, admin_get_donor, organization_form_submit
+    admin_list_donors, admin_get_donor
 )
 from django.views.generic import RedirectView, TemplateView
 from django.http import FileResponse
@@ -46,7 +46,17 @@ def serve_html(request, filename):
         # Remove .html extension if present
         if filename.endswith('.html'):
             filename = filename[:-5]
-        return render(request,f"{filename}.html")
+        
+        # Add .html extension back for file lookup
+        file_path = os.path.join(settings.BASE_DIR.parent, 'frontend', f"{filename}.html")
+        
+        # Read the HTML file
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Create response with proper content type
+        
+        return render(request,filename)
     except Exception as e:
         return HttpResponse(f"Error loading template: {str(e)}", status=500)
 
@@ -64,7 +74,6 @@ urlpatterns = [
     path('api/donor/login/', donor_login, name='donor_login'),
     path('api/organization/login/', organization_login, name='organization_login'),
     path('api/organization/register/', organization_register, name='organization_register'),
-    path('api/organization/submit/', organization_form_submit, name='submit_form_organization'),
     path('api/organization/status/<int:org_id>/', check_organization_status, name='check_organization_status'),
     path('api/admin/organizations/', admin_list_organizations, name='admin_list_organizations'),
     path('api/admin/organizations/<int:org_id>/', admin_get_organization, name='admin_get_organization'),
