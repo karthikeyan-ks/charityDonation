@@ -216,7 +216,7 @@
             <div class="dashboard-container">
                 <div class="dashboard-header">
                     <h2 class="dashboard-title">My Donations</h2>
-                    <a href="/donsubmit.html" class="btn btn-primary">Submit New Donation</a>
+                    <a href="{% url 'donor_submit' %}" class="btn btn-primary">Submit New Donation</a>
                 </div>
                 
                 <div class="donation-list" id="donationList">
@@ -254,96 +254,6 @@
     <script src="/static/js/jquery.stellar.min.js"></script>
     <script src="/static/js/hoverIntent.js"></script>
     <script src="/static/js/superfish.js"></script>
-    <script src="/static/js/main.js"></script>
-    <script src="/static/js/token-manager.js"></script>
-    <script src="/static/js/auth-check.js"></script>
-    <script src="/static/js/logout-handler.js"></script>
-    <script src="/static/js/donor-dashboard.js"></script>
-    <script>
-        // Check authentication status
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!isAuthenticated('donor')) {
-                alert('You must be logged in as a donor to access this page');
-                window.location.href = '/donor.html';
-                return;
-            }
-            
-            // Display user info
-            const userInfo = localStorage.getItem('userEmail') || '';
-            const userName = localStorage.getItem('userName') || userInfo || 'Donor';
-            const userNameElement = document.getElementById('userName');
-            if (userNameElement) {
-                userNameElement.textContent = userName;
-            }
-            
-            // Note: Logout is now handled by logout-handler.js
-        });
-
-        // Direct logout handler
-        document.addEventListener('DOMContentLoaded', function() {
-            const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    console.log("Donor dashboard logout clicked");
-                    
-                    // Clear ALL localStorage
-                    localStorage.clear();
-                    
-                    // Clear sessionStorage
-                    sessionStorage.clear();
-                    
-                    // Clear cookies
-                    document.cookie.split(";").forEach(function(c) {
-                        document.cookie = c.replace(/^ +/, "").replace(/=.*/, 
-                        "=;expires=" + new Date().toUTCString() + ";path=/");
-                    });
-                    
-                    // Force redirect to homepage
-                    window.location.replace('index.html');
-                });
-            }
-        });
-
-        // Function to load donations
-        async function loadDonations() {
-            try {
-                // Use TokenManager for authenticated request
-                const response = await fetch('/api/items/items', {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('access')
-                    }
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`Failed to load donations: ${response.status}`);
-                }
-                
-                const donations = await response.json();
-                const donationList = document.getElementById('donationList');
-                
-                if (donations.length === 0) {
-                    showEmptyState();
-                    return;
-                }
-                
-                donationList.innerHTML = donations.map(createDonationItem).join('');
-            } catch (error) {
-                console.error('Error loading donations:', error);
-                showEmptyState();
-            }
-        }
-        
-        function showEmptyState() {
-            const donationList = document.getElementById('donationList');
-            donationList.innerHTML = `
-                <div class="empty-state">
-                    <i class="icon-gift"></i>
-                    <p>You haven't submitted any donations yet or there was an error loading your donations.</p>
-                    <a href="donsubmit.html" class="btn btn-primary mt-3">Make a Donation</a>
-                </div>
-            `;
-        }
-    </script>
+    
 </body>
 </html> 

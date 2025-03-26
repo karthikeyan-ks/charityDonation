@@ -1,32 +1,46 @@
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
 
 class Donation(models.Model):
-    PAYMENT_STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('completed', 'Completed'),
-        ('failed', 'Failed'),
-        ('refunded', 'Refunded'),
+    donor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='donations')  # Changed related_name
+    
+    CATEGORY_CHOICES = [
+        ('clothing', 'Clothing'),
+        ('toys', 'Toys & Games'),
+        ('books', 'Books & Education'),
+        ('medical', 'Medical Supplies'),
+        ('food', 'Non-perishable Food'),
+        ('other', 'Other'),
     ]
-
-    campaign = models.ForeignKey('campaigns.Campaign', on_delete=models.CASCADE, related_name='donations')
-    donor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='donations')
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
-    payment_method = models.CharField(max_length=50)
-    transaction_id = models.CharField(max_length=100, blank=True)
-    anonymous = models.BooleanField(default=False)
-    message = models.TextField(blank=True)
+    
+    item_category = models.CharField(max_length=50, choices=CATEGORY_CHOICES,default="clothing")
+    other_category = models.CharField(max_length=100, blank=True, null=True)
+    item_name = models.CharField(max_length=255,blank=True)
+    item_description = models.TextField(blank=True)
+    
+    CONDITION_CHOICES = [
+        ('new', 'New'),
+        ('likenew', 'Like New'),
+        ('good', 'Good'),
+        ('fair', 'Fair'),
+        ('poor', 'Poor'),
+    ]
+    
+    item_condition = models.CharField(max_length=20, choices=CONDITION_CHOICES,default="new")
+    item_quantity = models.PositiveIntegerField(default=100)
+    
+    address_line1 = models.CharField(max_length=255,default="")
+    city = models.CharField(max_length=100,default="")
+    state = models.CharField(max_length=100,default="")
+    zip_code = models.CharField(max_length=20,default="")
+    
+    pickup_availability = models.CharField(max_length=255,default="yes")  # Store as a comma-separated string
+    pickup_notes = models.TextField(blank=True, null=True)
+    additional_notes = models.TextField(blank=True, null=True)  
+    
+    uploaded_files = models.JSONField(default=list, blank=True)  # Store file names as JSON
+    
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.donor.email} - {self.amount} - {self.campaign.title}"
-
-    def save(self, *args, **kwargs):
-        if self.payment_status == 'completed':
-            # Update campaign current amount
-            self.campaign.current_amount += self.amount
-            self.campaign.save()
-        super().save(*args, **kwargs)
+        return f"{self.donor.email} - {self.item_name} ({self.item_category})"

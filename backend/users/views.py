@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model, authenticate, login
 from .serializers import UserSerializer, UserRegistrationSerializer
 from .models import CustomUser, Organization, ResourceNeed
-from donations.models import Donation  # Import Donation from donations app
+from donations.models import Donation # Import Donation from donations app
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
