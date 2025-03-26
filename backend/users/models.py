@@ -75,3 +75,37 @@ class AdminNotification(models.Model):
     
     def __str__(self):
         return f"{self.notification_type} - {self.user.email} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+    
+class Resource(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+from multiselectfield import MultiSelectField
+class DonationDay(models.Model):
+    did = models.AutoField(primary_key=True)
+    day = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.day
+
+
+class ResourceNeed(models.Model):
+    rid = models.AutoField(primary_key=True)
+    resource = models.ForeignKey("Resource", on_delete=models.CASCADE)  # One-to-Many instead of Many-to-Many
+    quantity = models.IntegerField(blank=False)
+    description = models.TextField()
+    pickup_available = models.BooleanField(default=True)
+    location = models.TextField()
+    contact_number = models.CharField(max_length=13)
+    donation_days = models.ManyToManyField(DonationDay,related_name="donation_day_resource",blank=True)
+    donation_hours = models.CharField(max_length=20)
+    scheduling_notes = models.TextField()
+    additional_notes = models.TextField()
+    organization = models.ForeignKey("Organization", on_delete=models.CASCADE, related_name="organization_name")
+    donations = models.ManyToManyField("donations.Donation", blank=True)
+
+    def __str__(self):
+        return f"{self.resource} - {self.quantity} items"

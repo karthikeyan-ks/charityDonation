@@ -24,7 +24,7 @@ from users.views import (
     UserViewSet, donor_login, organization_login, organization_register,
     admin_approve_organization, admin_list_organizations, admin_get_organization,
     admin_login, admin_dashboard, approve_organization, check_organization_status,
-    admin_list_donors, admin_get_donor, organization_form_submit
+    admin_list_donors, admin_get_donor, organization_form_submit,organization_form_dashboard,success_page
 )
 from django.views.generic import RedirectView, TemplateView
 from django.http import FileResponse
@@ -57,6 +57,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/auth/', include('rest_framework.urls')),
+    path("success/", success_page, name="success_page"),
     
     # Authentication endpoints
     path('api/admin/login/', admin_login, name='api_admin_login'),
@@ -65,6 +66,7 @@ urlpatterns = [
     path('api/organization/login/', organization_login, name='organization_login'),
     path('api/organization/register/', organization_register, name='organization_register'),
     path('api/organization/submit/', organization_form_submit, name='submit_form_organization'),
+    path('api/organization/dashboard/', organization_form_dashboard, name='dashboard_form_organization'),
     path('api/organization/status/<int:org_id>/', check_organization_status, name='check_organization_status'),
     path('api/admin/organizations/', admin_list_organizations, name='admin_list_organizations'),
     path('api/admin/organizations/<int:org_id>/', admin_get_organization, name='admin_get_organization'),

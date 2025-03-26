@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Dashboard</title>
+    <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/icomoon.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/superfish.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Optional: Bootstrap Icons (if needed) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .needs-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        
+        .welcome-banner {
+            background-color: #FF6B35;
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .welcome-banner h3 {
+            margin-top: 0;
+            color: white;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .form-section h3 {
+            margin-top: 0;
+            color: #FF6B35;
+            margin-bottom: 20px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: #FF6B35;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            font-family: 'Open Sans', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #E85A2C;
+        }
+        
+        .submit-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .submit-btn {
+            min-width: 200px;
+            height: 45px;
+            font-size: 16px;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+        }
+        
+        .needs-page-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #FF6B35;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        .help-block {
+            color: #777;
+            font-size: 13px;
+            margin-top: 5px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .required-field::after {
+            content: " *";
+            color: #e53935;
+        }
+        
+        .resource-item {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .remove-resource {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #e53935;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .add-resource-btn {
+            margin-top: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            color: #FF6B35;
+            font-weight: 600;
+            padding: 10px 20px;
+        }
+        
+        .add-resource-btn:hover {
+            background-color: #e8e8e8;
+            color: #E85A2C;
+        }
+        
+        .form-control {
+            height: 45px;
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .form-control:focus {
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+        }
+        
+        textarea.form-control {
+            height: auto;
+            min-height: 100px;
+        }
+        
+        select.form-control {
+            height: 45px;
+        }
+        
+        select[multiple].form-control {
+            height: auto;
+            min-height: 120px;
+        }
+        
+        .form-section p {
+            color: #666;
+            font-family: 'Open Sans', sans-serif;
+            margin-bottom: 20px;
+        }
+        
+        .btn-default {
+            background-color: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            color: #333;
+            font-weight: 600;
+            padding: 10px 20px;
+        }
+        
+        .btn-default:hover {
+            background-color: #e8e8e8;
+        }
+
+        /* Additional styles to match donorsubmit */
+        .form-section {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #FF6B35;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #E85A2C;
+            transform: translateY(-1px);
+        }
+
+        .btn-default {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-default:hover {
+            background-color: #e8e8e8;
+        }
+
+        .resource-item {
+            transition: all 0.3s ease;
+        }
+
+        .resource-item:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .remove-resource {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .remove-resource:hover {
+            opacity: 1;
+        }
+
+        .add-resource-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        .add-resource-btn i {
+            margin-right: 5px;
+        }
+
+        .submit-btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="/static/js/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 text-left fh5co-link">
+                    <a href="#">FAQ</a>
+                    <a href="#">Forum</a>
+                    <a href="/contact.html">Contact</a>
+                </div>
+                <div class="col-md-6 col-sm-6 text-right fh5co-social">
+                    <a href="#" class="grow"><i class="icon-facebook2"></i></a>
+                    <a href="#" class="grow"><i class="icon-twitter2"></i></a>
+                    <a href="#" class="grow"><i class="icon-instagram2"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header id="fh5co-header-section" class="sticky-banner">
+        <div class="container">
+            <div class="nav-header">
+                <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+                <h1 id="fh5co-logo"><a href="/index.html">UNITE TO UPLIFT</a></h1>
+                <nav id="fh5co-menu-wrap" role="navigation">
+                    <ul class="sf-menu" id="fh5co-primary-menu">
+                        <li><a href="/index.html">Home</a></li>
+                        <li class="active">
+                            <a href="#" class="fh5co-sub-ddown">My Account</a>
+                            <ul class="fh5co-sub-menu">
+                                <li><a href="#" id="logoutLink" data-action="logout" onclick="performLogout(); return false;">Logout</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'submit_form_organization'%}">Add new Need</a></li>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <h3>
+            Dashboard
+        </h3>
+                
+        {% block content %}
+        <div class="container mt-4">
+            <h2 class="text-center mb-4">Resource Needs</h2>
+            
+            <div class="row">
+                {% for resource in resource_needs %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center p-4 text-white"
+                                style="background: linear-gradient(to right, #ff416c, #ff4b2b); border-radius: 10px;">
+                                <h1 class="fw-bold">{{ resource.resource }}</h1>
+                            </div>
+
+
+                            <h2 class="card-subtitle m-2 text-muted">Quantity: {{ resource.quantity }}</h2>
+                            <p class="card-text"><strong>Description:</strong> {{ resource.description }}</p>
+                            
+                            <p><strong>Pickup Available:</strong> {% if resource.pickup_available %} Yes {% else %} No {% endif %}</p>
+                            
+                            <p><strong>Location:</strong> {{ resource.location }}</p>
+                            <p><strong>Contact:</strong> {{ resource.contact_number }}</p>
+                            
+                            <p><strong>Donation Days:</strong> {{ resource.donation_days }}</p>
+                            <p><strong>Donation Hours:</strong> {{ resource.donation_hours }}</p>
+                            
+                            {% if resource.scheduling_notes %}
+                            <p><strong>Scheduling Notes:</strong> {{ resource.scheduling_notes }}</p>
+                            {% endif %}
+                            
+                            {% if resource.additional_notes %}
+                            <p><strong>Additional Notes:</strong> {{ resource.additional_notes }}</p>
+                            {% endif %}
+                            
+                            <p><strong>Organization:</strong> {{ resource.organization.name }}</p>
+                            
+                            {% if resource.donations.all %}
+                            <p><strong>Donations:</strong></p>
+                            <ul>
+                                {% for donation in resource.donations.all %}
+                                <li>{{ donation.name }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <p><em>No donations yet.</em></p>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center">No resource needs available.</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endblock %}
+        
+    </div>
+    
+</body>
+</html>

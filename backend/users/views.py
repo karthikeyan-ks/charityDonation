@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model, authenticate, login
 from .serializers import UserSerializer, UserRegistrationSerializer
-from .models import CustomUser, Organization
+from .models import CustomUser, Organization, ResourceNeed
 from donations.models import Donation  # Import Donation from donations app
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
@@ -16,6 +17,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import AdminNotification
 from django.db.models import Q
+from .forms import ResourceNeedForm
+from django.forms import formset_factory
 
 User = get_user_model()
 
@@ -349,9 +352,50 @@ def organization_register(request):
         'success': False,
         'message': 'Invalid request method'
     }, status=405)
-    
+
+from django import forms
+
 def organization_form_submit(request):
-    return render(request,'orgsubmit.html')
+    ResourceNeedFormSet = formset_factory(ResourceNeedForm, extra=1)
+
+    if request.method == "POST":
+        formset = ResourceNeedFormSet(request.POST)
+        print("Validation errors:", formset.errors)  # Debugging step
+
+        if formset.is_valid():
+            organization = Organization.objects.first()  # Modify this logic as needed
+
+            for form in formset:
+                if form.cleaned_data.get("resource"):  # Ensure resource is filled
+                    resource_need = form.save(commit=False)
+                    resource_need.organization = organization
+                    resource_need.save()  # Save before adding ManyToMany relations
+
+                    # Correctly handling ManyToManyField (donation_days)
+                    if "donation_days" in form.cleaned_data:
+                        resource_need.donation_days.set(form.cleaned_data["donation_days"])
+
+                    resource_need.save()
+
+            return redirect("success_page")  # Redirect after successful submission
+    
+    else:
+        formset = ResourceNeedFormSet()
+
+    return render(request, "orgsubmit.html", {"formset": formset})
+
+
+def success_page(request):
+    return render(request, "success.html")
+
+
+@login_required
+def organization_form_dashboard(request):
+    organization = Organization.objects.get(user = request.user)
+    resource_need = ResourceNeed.objects.filter(organization=organization)
+    return render(request,'organization_dashboard.html',{
+        'resource_needs':resource_need
+    })
 
 @csrf_exempt
 @user_passes_test(is_admin)

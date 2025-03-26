@@ -13,7 +13,69 @@
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/superfish.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Select2 CSS --><link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+
+    <!-- jQuery (needed for Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
     <style>
+        .select2-container .select2-selection--multiple {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-height: 38px;
+            background-color: #fff;
+        }
+        
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #007bff;
+            border: 1px solid #0056b3;
+            color: white;
+            border-radius: 3px;
+            padding: 5px;
+            font-size: 14px;
+        }        
+        .custom-multiselect {
+            height: auto;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        
+        .custom-multiselect option {
+            padding: 5px;
+            font-size: 14px;
+        }        
+        .custom-input {
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        
+        .custom-textarea {
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        
+        .custom-select {
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .custom-select-multiple {
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
         .needs-container {
             max-width: 800px;
             margin: 40px auto;
@@ -284,6 +346,9 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
     </style>
+    <!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+
 
     <!-- Scripts -->
     <script src="/static/js/modernizr-2.6.2.min.js"></script>
@@ -321,6 +386,7 @@
                                         <li><a href="#" id="logoutLink" data-action="logout" onclick="performLogout(); return false;">Logout</a></li>
                                     </ul>
                                 </li>
+                                <li><a href="{% url 'dashboard_form_organization'%}">Dashboard</a></li>
                                 <li><a href="/about.html">About</a></li>
                                 <li><a href="/contact.html">Contact</a></li>
                             </ul>
@@ -330,127 +396,30 @@
             </header>
 
             <!-- Main Content Area -->
-            <div class="container">
-                <div class="needs-container">
-                    <h2 class="needs-page-header">Organization Needs Assessment</h2>
-                    
-                    <form method="POST" action="{% url 'submit_form_organization' %}">
-                       {% csrf_token %}
-                        <!-- Resource Needs Section -->
-                        <div class="form-section">
-                            <h3>Resource Needs</h3>
-                            <p>Please specify what resources your organization needs and in what quantities</p>
-                            
-                            <div id="resourceContainer">
-                                <div class="resource-item">
-                                    <span class="remove-resource"><i class="icon-cross"></i></span>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="resourceType1" class="required-field">Resource Type</label>
-                                                <select class="form-control" id="resourceType1" required>
-                                                    <option value="" disabled selected>Select resource type</option>
-                                                    <option value="food">Food</option>
-                                                    <option value="clothing">Clothing</option>
-                                                    <option value="medical">Medical Supplies</option>
-                                                    <option value="school">School Supplies</option>
-                                                    <option value="electronic">Electronics</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="quantity1" class="required-field">Quantity Needed</label>
-                                                <input type="text" class="form-control" id="quantity1" placeholder="e.g. 500 lbs, 200 items" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="description1">Specific Description</label>
-                                        <textarea class="form-control" id="description1" rows="2" placeholder="Please describe the specific items needed, condition requirements, etc."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <button type="button" class="btn btn-default add-resource-btn" id="addResource">
-                                <i class="icon-plus"></i> Add Another Resource Need
-                            </button>
-                        </div>
-                        
-                        <!-- Logistics Section -->
-                        <div class="form-section">
-                            <h3>Logistics Information</h3>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="pickupAvailable" class="required-field">Pickup Available?</label>
-                                        <select class="form-control" id="pickupAvailable" required>
-                                            <option value="" disabled selected>Select an option</option>
-                                            <option value="yes">Yes, we can pick up donations</option>
-                                            <option value="limited">Limited pickup capability</option>
-                                            <option value="no">No, donors must deliver</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="logisticsPartners">Location</label>
-                                <textarea class="form-control" id="logisticsPartners" rows="2" placeholder="Address"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="specialRequirements">Contact Number</label>
-                                <textarea class="form-control" id="specialRequirements" rows="2" placeholder="Phone Number"></textarea>
-                            </div>
-                        </div>
-                        
-                        <!-- Schedule Section -->
-                        <div class="form-section">
-                            <h3>Donation Schedule</h3>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="donationDays" class="required-field">Days Available for Receiving Donations</label>
-                                        <select multiple class="form-control" id="donationDays" required>
-                                            <option value="monday">Monday</option>
-                                            <option value="tuesday">Tuesday</option>
-                                            <option value="wednesday">Wednesday</option>
-                                            <option value="thursday">Thursday</option>
-                                            <option value="friday">Friday</option>
-                                            <option value="saturday">Saturday</option>
-                                            <option value="sunday">Sunday</option>
-                                        </select>
-                                        <span class="help-block">Hold Ctrl/Cmd to select multiple days</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="donationHours" class="required-field">Hours Available</label>
-                                        <input type="text" class="form-control" id="donationHours" placeholder="e.g. 9AM-5PM, 10AM-2PM" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="schedulingNotes">Additional Scheduling Notes</label>
-                                <textarea class="form-control" id="schedulingNotes" rows="2" placeholder="Any additional information about your donation receiving schedule or process"></textarea>
-                            </div>
-                        </div>
-                        
-                        <!-- Additional Information -->
-                        <div class="form-section">
-                            <h3>Additional Information</h3>
-                            <div class="form-group">
-                                <label for="additionalNotes">Additional Notes</label>
-                                <textarea class="form-control" id="additionalNotes" rows="3" placeholder="Any other information you'd like potential donors to know"></textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="submit-container">
-                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
-                        </div>
-                    </form>
-                </div>
+            {% block content %}
+            <div class="container p-2 m-2">
+                <h2>Organization Needs Assessment</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ formset.as_p }}
+                    <button type="submit">Submit</button>
+                </form>            
             </div>
+
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("addResource").addEventListener("click", function() {
+                    let totalForms = document.getElementById("id_form-TOTAL_FORMS");
+                    let container = document.getElementById("resourceContainer");
+                    let newIndex = Number(totalForms.value);
+                    let newFormHtml = container.children[0].outerHTML.replace(/form-\d+/g, `form-${newIndex}`);
+                    container.insertAdjacentHTML("beforeend", newFormHtml);
+                    totalForms.value = newIndex + 1;
+                });
+            });
+            </script>
+
+            {% endblock %}
 
             <footer>
                 <div id="footer">
@@ -486,6 +455,18 @@
     <script src="/static/js/token-manager.js"></script>
     <script src="/static/js/auth-check.js"></script>
     <script src="/static/js/logout-handler.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".custom-select-multiple").select2({
+            placeholder: "Select resources",
+            allowClear: true
+            });
+            $(".custom-multiselect").select2({
+                placeholder: "Select Donation Days",
+                allowClear: true
+              });
+        });
+        </script>
     
     <script>
         // Check if user is logged in as organization

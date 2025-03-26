@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db.models import Q
-from .models import CustomUser, Organization
+from .models import CustomUser, Organization, ResourceNeed,Resource, DonationDay
 
 def mark_as_test_users(modeladmin, request, queryset):
     queryset.update(is_test_user=True)
@@ -41,3 +41,6 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Organization, OrganizationAdmin)
+admin.site.register(ResourceNeed)
+admin.site.register(Resource)
+admin.site.register(DonationDay)
