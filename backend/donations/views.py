@@ -27,6 +27,7 @@ class DonationViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 def donate_item(request):
+    donations = Donation.objects.filter(donor = request.user)
     if request.method == "POST":
         try:
             # Extract data from request
@@ -56,12 +57,15 @@ def donate_item(request):
                 uploaded_files=file_names,  # Save file names in JSON field
             )
 
-            return render(request, 'donor-dashboard.html')
+            donations = Donation.objects.filter(donor = request.user)
+
+            return render(request, 'donor-dashboard.html',{"donations":donations})
 
         except Exception as e:
-            return render(request, 'donor-dashboard.html')
+            return render(request, 'donor-dashboard.html',{"donations":donations})
 
-    return render(request, 'donor-dashboard.html')
+    return render(request, 'donor-dashboard.html',{"donations":donations})
+
 def donor_submit(request):
 
     return render(request, 'donsubmit.html')

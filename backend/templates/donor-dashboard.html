@@ -222,6 +222,63 @@
                 <div class="donation-list" id="donationList">
                     <!-- Donations will be loaded here dynamically -->
                 </div>
+               
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Donation List</h2>
+    <table class="table table-striped mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Donor</th>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Condition</th>
+                <th>Quantity</th>
+                <th>Address</th>
+                <th>Pickup Availability</th>
+                <th>Notes</th>
+                <th>Uploaded Files</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donation in donations %}
+            <tr>
+                <td>{{ donation.donor.email }}</td>
+                <td>{{ donation.item_name|default:"N/A" }}</td>
+                <td>{{ donation.get_item_category_display }}</td>
+                <td>{{ donation.get_item_condition_display }}</td>
+                <td>{{ donation.item_quantity }}</td>
+                <td>
+                    {{ donation.address_line1 }}, {{ donation.city }}, {{ donation.state }}, {{ donation.zip_code }}
+                </td>
+                <td>{{ donation.pickup_availability }}</td>
+                <td>
+                    <strong>Pickup Notes:</strong> {{ donation.pickup_notes|default:"None" }}<br>
+                    <strong>Additional Notes:</strong> {{ donation.additional_notes|default:"None" }}
+                </td>
+                <td>
+                    {% if donation.uploaded_files %}
+                        {% for file in donation.uploaded_files %}
+                            <a href="{{ file.url }}" target="_blank">{{ file.name }}</a><br>
+                        {% endfor %}
+                    {% else %}
+                        No files uploaded
+                    {% endif %}
+                </td>
+                <td>{{ donation.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="10" class="text-center">No donations found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
             </div>
 
             <footer>
