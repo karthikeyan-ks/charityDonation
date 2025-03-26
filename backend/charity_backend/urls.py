@@ -26,6 +26,7 @@ from users.views import (
     admin_login, admin_dashboard, approve_organization, check_organization_status,
     admin_list_donors, admin_get_donor, organization_form_submit,organization_form_dashboard,success_page
 )
+from donations.views import donate_item
 from django.views.generic import RedirectView, TemplateView
 from django.http import FileResponse
 import os
@@ -63,6 +64,7 @@ urlpatterns = [
     path('api/admin/login/', admin_login, name='api_admin_login'),
     path('api/admin/dashboard/', admin_dashboard, name='api_admin_dashboard'),
     path('api/donor/login/', donor_login, name='donor_login'),
+    path('api/items/donate/', donate_item, name='donate_item'),
     path('api/organization/login/', organization_login, name='organization_login'),
     path('api/organization/register/', organization_register, name='organization_register'),
     path('api/organization/submit/', organization_form_submit, name='submit_form_organization'),

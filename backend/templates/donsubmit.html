@@ -198,160 +198,128 @@
                         </div>
                     </div>
                     
-                    <form id="itemDonationForm">
-                        <!-- Item Category Section -->
-                        <div class="form-section">
-                            <h4>Item Category</h4>
-                            <div class="form-group category-select">
-                                <label for="itemCategory">Select Category</label>
-                                <select class="form-control" id="itemCategory" required>
-                                    <option value="">-- Select a category --</option>
-                                    <option value="clothing">Clothing</option>
-                                    <option value="toys">Toys & Games</option>
-                                    <option value="books">Books & Education</option>
-                                    <option value="medical">Medical Supplies</option>
-                                    <option value="food">Non-perishable Food</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group custom-field" id="otherCategoryField">
-                                <label for="otherCategory">Please specify category</label>
-                                <input type="text" class="form-control" id="otherCategory" placeholder="Enter category name">
-                            </div>
-                        </div>
-                        
-                        <!-- Item Details Section -->
-                        <div class="form-section">
-                            <h4>Item Details</h4>
-                            <div class="form-group">
-                                <label for="itemName">Item Name</label>
-                                <input type="text" class="form-control" id="itemName" placeholder="Enter name of item" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="itemDescription">Description</label>
-                                <textarea class="form-control" id="itemDescription" rows="3" placeholder="Describe the item in detail (size, color, brand, etc.)" required></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Condition</label>
-                                <div class="condition-wrapper">
-                                    <div class="condition-option" data-value="new">New</div>
-                                    <div class="condition-option" data-value="likenew">Like New</div>
-                                    <div class="condition-option" data-value="good">Good</div>
-                                    <div class="condition-option" data-value="fair">Fair</div>
-                                    <div class="condition-option" data-value="poor">Poor</div>
-                                </div>
-                                <input type="hidden" id="itemCondition" name="itemCondition" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="itemQuantity">Quantity</label>
-                                <input type="number" class="form-control" id="itemQuantity" min="1" value="1" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="itemPhotos">Upload Photos (up to 3)</label>
-                                <input type="file" class="form-control" id="itemPhotos" accept="image/*" multiple>
-                                <small class="form-text text-muted">Clear photos help organizations understand your donation better.</small>
-                                <div class="row" id="photoPreviewContainer">
-                                    <div class="col-md-4">
-                                        <img id="photoPreview1" class="upload-preview" src="#" alt="Preview">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <img id="photoPreview2" class="upload-preview" src="#" alt="Preview">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <img id="photoPreview3" class="upload-preview" src="#" alt="Preview">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Category-specific fields will be inserted here dynamically -->
-                        <div id="categorySpecificFields"></div>
-                        
-                        <!-- Location Section -->
-                        <div class="form-section">
-                            <h4>Pickup Location</h4>
-                            
-                            <div class="form-group">
-                                <label for="addressLine1">Address or location for collection</label>
-                                <input type="text" class="form-control" id="addressLine1" placeholder="Street address" required>
-                            </div>
-                            
+                    <form action="{% url 'donate_item' %}" method="POST">
+    {% csrf_token %}
+    
+    <!-- Item Category Section -->
+    <div class="form-section">
+        <h4>Item Category</h4>
+        <div class="form-group category-select">
+            <label for="itemCategory">Select Category</label>
+            <select class="form-control" id="itemCategory" name="itemCategory" required>
+                <option value="">-- Select a category --</option>
+                <option value="clothing">Clothing</option>
+                <option value="toys">Toys & Games</option>
+                <option value="books">Books & Education</option>
+                <option value="medical">Medical Supplies</option>
+                <option value="food">Non-perishable Food</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        
+        <div class="form-group custom-field" id="otherCategoryField">
+            <label for="otherCategory">Please specify category</label>
+            <input type="text" class="form-control" id="otherCategory" name="otherCategory" placeholder="Enter category name">
+        </div>
+    </div>
+    
+    <!-- Item Details Section -->
+    <div class="form-section">
+        <h4>Item Details</h4>
+        <div class="form-group">
+            <label for="itemName">Item Name</label>
+            <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Enter name of item" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="itemDescription">Description</label>
+            <textarea class="form-control" id="itemDescription" name="itemDescription" rows="3" placeholder="Describe the item in detail (size, color, brand, etc.)" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Condition</label>
+            <div class="condition-wrapper">
+                <div class="condition-option" data-value="new">New</div>
+                <div class="condition-option" data-value="likenew">Like New</div>
+                <div class="condition-option" data-value="good">Good</div>
+                <div class="condition-option" data-value="fair">Fair</div>
+                <div class="condition-option" data-value="poor">Poor</div>
+            </div>
+            <input type="hidden" id="itemCondition" name="itemCondition" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="itemQuantity">Quantity</label>
+            <input type="number" class="form-control" id="itemQuantity" name="itemQuantity" min="1" value="1" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="itemPhotos">Upload Photos (up to 3)</label>
+            <input type="file" class="form-control" id="itemPhotos" name="itemPhotos" accept="image/*" multiple>
+        </div>
+    </div>
+    
+    <!-- Location Section -->
+    <div class="form-section">
+        <h4>Pickup Location</h4>
+        <div class="form-group">
+            <label for="addressLine1">Address</label>
+            <input type="text" class="form-control" id="addressLine1" name="addressLine1" placeholder="Street address" required>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" class="form-control" id="state" name="state" required>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="zipCode">Zip Code</label>
+                    <input type="text" class="form-control" id="zipCode" name="zipCode" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pickup Availability -->
+    <div class="form-section">
+        <h4>Pickup Availability</h4>
+        <div class="form-group pickup-options">
+            <label><input type="checkbox" name="availability" value="weekday-morning"> Weekday Mornings</label>
+            <label><input type="checkbox" name="availability" value="weekday-afternoon"> Weekday Afternoons</label>
+            <label><input type="checkbox" name="availability" value="weekday-evening"> Weekday Evenings</label>
+            <label><input type="checkbox" name="availability" value="weekend-morning"> Weekend Mornings</label>
+            <label><input type="checkbox" name="availability" value="weekend-afternoon"> Weekend Afternoons</label>
+        </div>
+        <div class="form-group">
+            <label for="pickupNotes">Additional Notes</label>
+            <textarea class="form-control" id="pickupNotes" name="pickupNotes" rows="2" placeholder="Special instructions"></textarea>
+        </div>
+    </div>
+    
+    <!-- Submit Section -->
+    <div class="form-section">
+        <div class="form-group">
+            <label for="additionalNotes">Additional Notes (Optional)</label>
+            <textarea class="form-control" id="additionalNotes" name="additionalNotes" rows="3"></textarea>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" id="termsAgreement" name="termsAgreement" required> I confirm the item details are accurate.</label>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Submit Donation</button>
+        </div>
+    </div>
+</form>
 
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input type="text" class="form-control" id="city" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="state">State</label>
-                                        <input type="text" class="form-control" id="state" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="zipCode">Zip Code</label>
-                                        <input type="text" class="form-control" id="zipCode" required>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                        </div>
-                        
-                        <!-- Pickup Availability -->
-                        <div class="form-section">
-                            <h4>Pickup Availability</h4>
-                            <div class="form-group pickup-options">
-                                <label>
-                                    <input type="checkbox" name="availability" value="weekday-morning"> Weekday Mornings (9am - 12pm)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="availability" value="weekday-afternoon"> Weekday Afternoons (12pm - 5pm)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="availability" value="weekday-evening"> Weekday Evenings (5pm - 8pm)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="availability" value="weekend-morning"> Weekend Mornings (9am - 12pm)
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="availability" value="weekend-afternoon"> Weekend Afternoons (12pm - 5pm)
-                                </label>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="pickupNotes">Additional Notes for Pickup</label>
-                                <textarea class="form-control" id="pickupNotes" rows="2" placeholder="Any special instructions for pickup (e.g., Ring bell, call before arrival)"></textarea>
-                            </div>
-                        </div>
-                        
-                        <!-- Submit Section -->
-                        <div class="form-section">
-                            <div class="form-group">
-                                <label for="additionalNotes">Additional Notes (Optional)</label>
-                                <textarea class="form-control" id="additionalNotes" rows="3" placeholder="Any other information that might be helpful"></textarea>
-                            </div>
-                            
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" id="termsAgreement" required> I confirm that this item is in the stated condition and I am the rightful owner.
-                                </label>
-                            </div>
-                            
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-lg">Submit Donation</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
                 
                 <!-- Success Message -->
@@ -511,7 +479,7 @@
                 // For now, we'll simulate a successful submission
                 // Uncomment the below code when backend is ready:
                 
-                /*
+                
                 fetch('/api/items/donate', {
                     method: 'POST',
                     headers: {

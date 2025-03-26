@@ -1,4 +1,4 @@
-#!/home/karthikeyan/code/junior/charity_backup/charity_backup/backend/venv-linux/bin/python
+#!/home/Yadhu/charityDonation/backend/venv-linux/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

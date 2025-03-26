@@ -309,7 +309,7 @@
         async function loadDonations() {
             try {
                 // Use TokenManager for authenticated request
-                const response = await fetch('/api/items/items/', {
+                const response = await fetch('/api/items/items', {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('access')
                     }

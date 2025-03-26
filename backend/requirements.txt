@@ -1,9 +1,8 @@
-Django==4.2.7
-djangorestframework==3.14.0
-django-cors-headers==4.3.0
-django-environ==0.11.2
-Pillow==10.1.0
-psycopg2-binary==2.9.9
-django-filter==23.3
-django-rest-auth==0.9.5
-django-allauth==0.57.0 
+Django
+djangorestframework
+django-cors-headers
+django-environ
+psycopg2-binary
+django-filter
+django-rest-auth
+django-allauth
