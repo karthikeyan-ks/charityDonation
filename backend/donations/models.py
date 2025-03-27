@@ -2,7 +2,10 @@ from django.db import models
 from django.conf import settings
 
 class Donation(models.Model):
-    donor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='donations')  # Changed related_name
+    
+    did=models.AutoField(primary_key=True)
+
+    donor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='donations_donor')  # Changed related_name
     
     CATEGORY_CHOICES = [
         ('clothing', 'Clothing'),
@@ -38,7 +41,7 @@ class Donation(models.Model):
     pickup_notes = models.TextField(blank=True, null=True)
     additional_notes = models.TextField(blank=True, null=True)  
     
-    uploaded_files = models.JSONField(default=list, blank=True)  # Store file names as JSON
+    uploaded_files = models.ImageField(upload_to='donations/', blank=True, null=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -1,0 +1,13 @@
+Run the command kbuildsycoca6 --noincremental. If it outputs "applications.menu" not found, continue to the next step.
+Install the archlinux-xdg-menu package using sudo pacman -Sy archlinux-xdg-menu.
+Generate the applications.menu file by running sudo update-desktop-database.
+Navigate to the /etc/xdg/menus directory using cd /etc/xdg/menus.
+Check the filename using ls. It's expected to be "arch-applications.menu".
+Rename the file to "applications.menu" using sudo mv arch-applications.menu applications.menu.
+Create a symbolic link of /etc/xdg/menus/applications.menu in ~/.config/menus/ by executing the following command:
+
+bash
+
+ln -s /etc/xdg/menus/applications.menu ~/.config/menus/applications.menu
+
+Finally, run kbuildsycoca6 --noincremental again, and it should work fine.

@@ -525,7 +525,7 @@
                         console.log('Login successful, userType set to:', localStorage.getItem('userType'));
                         
                         // Redirect to dashboard
-                        window.location.href = 'donor-dashboard.html';
+                        window.location.href = 'api/items/donate/';
                 } else {
                     // Show error message
                     const errorMessage = data.message || 'Login failed. Please check your credentials.';

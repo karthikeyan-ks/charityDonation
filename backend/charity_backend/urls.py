@@ -26,7 +26,7 @@ from users.views import (
     admin_login, admin_dashboard, approve_organization, check_organization_status,
     admin_list_donors, admin_get_donor, organization_form_submit,organization_form_dashboard,success_page
 )
-from donations.views import donate_item,donor_submit
+from donations.views import donate_item,donor_submit,donor_delete,edit_donation,custom_logout
 from django.views.generic import RedirectView, TemplateView
 from django.http import FileResponse
 import os
@@ -38,6 +38,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login
 import json
+from django.contrib.auth import views as auth_views
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -64,6 +65,8 @@ urlpatterns = [
     path('api/admin/login/', admin_login, name='api_admin_login'),
     path('api/admin/dashboard/', admin_dashboard, name='api_admin_dashboard'),
     path('api/donor/login/', donor_login, name='donor_login'),
+    path('api/donor/update/<int:did>/', edit_donation, name='donor_update'),
+    path('api/donor/delete/<int:did>/', donor_delete, name='donor_delete'),
     path('api/donor/submit/', donor_submit, name='donor_submit'),
     path('api/items/donate/', donate_item, name='donate_item'),
     path('api/organization/login/', organization_login, name='organization_login'),
@@ -77,8 +80,9 @@ urlpatterns = [
     path('api/admin/organizations/<int:org_id>/<str:action>/', approve_organization, name='approve_organization'),
     path('api/admin/donors/', admin_list_donors, name='admin_list_donors'),
     path('api/admin/donors/<int:donor_id>/', admin_get_donor, name='admin_get_donor'),
-    path('', serve_html, {'filename': 'index'}),
-    path('login/', serve_html, {'filename': 'login'}),
+    path('', serve_html, {'filename': 'index'},name="home"),
+    path('login/', serve_html, {'filename': 'login'},name="login"),
+    path('logout/', custom_logout, name='logout'),
     path('about/', serve_html, {'filename': 'about'}),
     path('contact/', serve_html, {'filename': 'contact'}),
     path('admin-dashboard/', serve_html, {'filename': 'admin-dashboard'}),
@@ -128,3 +132,6 @@ def admin_login(request):
             return JsonResponse({"success": False, "message": "Invalid request format"})
     else:
         return JsonResponse({"success": False, "message": "Invalid request method"})
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

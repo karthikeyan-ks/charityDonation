@@ -172,8 +172,8 @@
                         <nav id="fh5co-menu-wrap" role="navigation">
                             <ul class="sf-menu" id="fh5co-primary-menu">
                                 <li><a href="/index.html">Home</a></li>
-                                <li class="active"><a href="/donsubmit.html">Submit Donation</a></li>
-                                <li><a href="/donor-dashboard.html">My Donations</a></li>
+                                <li class="active"><a href="{% url 'donor_submit' %}">Submit Donation</a></li>
+                                <li><a href="{% url 'donate_item' %}">My Donations</a></li>
                                 <li><a href="#" onclick="logout(); return false;">Logout</a></li>
                             </ul>
                         </nav>
@@ -198,7 +198,7 @@
                         </div>
                     </div>
                     
-                    <form action="{% url 'donate_item' %}" method="POST">
+                    <form action="{% url 'donate_item' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     
     <!-- Item Category Section -->

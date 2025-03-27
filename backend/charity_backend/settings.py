@@ -221,3 +221,6 @@ ADMIN_EMAIL = 'admin@example.com'  # Admin email for notifications
 
 # Site ID
 SITE_ID = 1
+
+MEDIA_URL = '/media/'  # URL to access media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory to store uploaded files
